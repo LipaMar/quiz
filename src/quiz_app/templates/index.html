@@ -5,6 +5,10 @@
     <title>Quiz Wsiz</title>
 </head>
 <body>
-Hello World
+<ul>
+    {% for object in all_quizzes %}
+        <li>{{ object.quiz_title }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
