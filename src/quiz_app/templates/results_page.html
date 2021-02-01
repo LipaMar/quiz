@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results Page</title>
+</head>
+<body>
+    <p>{{ num_correct }}/{{ total_questions }}</p>
+
+    {% if score_over_75 %}
+        <p>{{ percentage_score }}</p>
+    {% else %}
+        <p>{{ percentage_score }}</p>
+    {% endif %}
+</body>
+</html>
