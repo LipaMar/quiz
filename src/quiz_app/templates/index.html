@@ -5,10 +5,14 @@
     <title>Quiz Wsiz</title>
 </head>
 <body>
+{% if all_quizzes %}
 <ul>
     {% for object in all_quizzes %}
-        <li>{{ object.quiz_title }}</li>
+        <li><a href="{% url 'quiz:single_quiz_page' object.id %}"> {{ object.quiz_title }}</a></li>
     {% endfor %}
 </ul>
+{% else %}
+    <p>There are no quizzes in the database.</p>
+{%  endif %}
 </body>
 </html>
