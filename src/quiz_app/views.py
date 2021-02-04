@@ -136,6 +136,7 @@ def create_quiz_page(request):
     }
 
     return render(request, 'create_quiz_page.html', context)
+<<<<<<< Updated upstream
 
 
 def create_new_question_page(request, quiz_id, question_id):
@@ -153,6 +154,21 @@ def create_new_question_page(request, quiz_id, question_id):
         if form.is_valid():
 
 
+=======
+<<<<<<< Updated upstream
+=======
+
+
+def create_new_question_page(request, quiz_id, question_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
+
+    if request.method == 'POST':
+
+        form = CreateNewQuestionForm(request.POST)
+
+        if form.is_valid():
+
+>>>>>>> Stashed changes
             question_text = form.cleaned_data['question_text']
 
             choice1 = form.cleaned_data["choice1_text"]
@@ -167,29 +183,46 @@ def create_new_question_page(request, quiz_id, question_id):
             choice4 = form.cleaned_data["choice4_text"]
             choice4_correctness = form.cleaned_data["choice4_correctness"]
 
+<<<<<<< Updated upstream
 
             question = Question(quiz=quiz, question_text=question_text, question_num=question_id)
             question.save()
 
 
+=======
+            question = Question(quiz=quiz, question_text=question_text, question_num=question_id)
+            question.save()
+
+>>>>>>> Stashed changes
             question.choice_set.create(choice_text=choice1, correct=choice1_correctness)
             question.choice_set.create(choice_text=choice2, correct=choice2_correctness)
             question.choice_set.create(choice_text=choice3, correct=choice3_correctness)
             question.choice_set.create(choice_text=choice4, correct=choice4_correctness)
 
+<<<<<<< Updated upstream
 
             if question_id == quiz.num_questions:
                 return HttpResponseRedirect(reverse('quiz:index'))
             else:
                 return HttpResponseRedirect(reverse('quiz:create_question_page', args=(quiz_id, question_id+1,)))
 
+=======
+            if question_id == quiz.num_questions:
+                return HttpResponseRedirect(reverse('quiz:index'))
+            else:
+                return HttpResponseRedirect(reverse('quiz:create_question_page', args=(quiz_id, question_id + 1,)))
+>>>>>>> Stashed changes
 
     else:
         form = CreateNewQuestionForm()
 
     if question_id == quiz.num_questions:
         next_submit = "Submit"
+<<<<<<< Updated upstream
     else :
+=======
+    else:
+>>>>>>> Stashed changes
         next_submit = "Next"
 
     context = {
@@ -200,3 +233,7 @@ def create_new_question_page(request, quiz_id, question_id):
     }
 
     return render(request, 'create_question_page.html', context)
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
