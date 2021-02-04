@@ -12,9 +12,5 @@
     {% else %}
         <p>{{ percentage_score }}</p>
     {% endif %}
-
-    <a class="home_button" href="{% url 'quiz:index' %}">Home</a>
-
-    <a class="home_button" href="{% url 'quiz:single_quiz_page' quiz.id %}">Try Again</a>
 </body>
 </html>

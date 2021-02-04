@@ -23,11 +23,6 @@ class CreateNewQuizForm(forms.Form):
             raise ValidationError(_('Invalid number of questions! Must be positive integer.)'))
 
         return data
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
 
 class CreateNewQuestionForm(forms.Form):
@@ -54,10 +49,7 @@ class CreateNewQuestionForm(forms.Form):
     choice4_correctness = forms.BooleanField(label="Choice 4 Correct?", required=False,
                                              widget=forms.CheckboxInput(attrs={'class': 'choice_correct_box'}))
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     def clean(self):
 
         choice1_answer = self.cleaned_data["choice1_correctness"]
@@ -71,18 +63,10 @@ class CreateNewQuestionForm(forms.Form):
 
         trueCount = 0
         for answer in answer_list:
-<<<<<<< Updated upstream
             if answer == True:
-=======
-            if answer:
->>>>>>> Stashed changes
                 trueCount += 1
 
         if trueCount != 1:
             raise ValidationError(_('Must have exactly one correct answer'))
 
         return self.cleaned_data
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
