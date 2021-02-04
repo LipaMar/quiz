@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Quiz, Choice
+from .forms import CreateNewQuizForm
 
 
 def index(request):
@@ -10,11 +11,12 @@ def index(request):
     context = {'all_quizzes': all_quizzes}
     return render(request, 'index.html', context)
 
+
 def single_quiz_page(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     num_of_questions = len(quiz.question_set.all())
 
-    if(num_of_questions == 0):
+    if num_of_questions == 0:
         quiz.delete()
         all_quizzes = Quiz.objects.all()
         context = {'all_quizzes': all_quizzes}
@@ -29,6 +31,7 @@ def single_quiz_page(request, quiz_id):
     context = {'quiz': quiz, 'num_questions': num_of_questions}
     return render(request, 'single_quiz_page.html', context)
 
+
 def single_question_page(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     current_question = quiz.question_set.get(question_num=question_id)
@@ -39,7 +42,7 @@ def single_question_page(request, quiz_id, question_id):
         last_question_check = True
         next_or_submit = "Submit"
 
-    next_question_id = question_id+1
+    next_question_id = question_id + 1
 
     all_choices = current_question.choice_set.all()
 
@@ -60,7 +63,7 @@ def vote(request, quiz_id, question_id):
     current_question = quiz.question_set.get(question_num=question_id)
 
     next_or_submit = "Next"
-    if(question_id == (len(quiz.question_set.all()))):
+    if question_id == (len(quiz.question_set.all())):
         next_or_submit = "Submit"
 
     try:
@@ -75,15 +78,15 @@ def vote(request, quiz_id, question_id):
     else:
         correct_answer = current_question.choice_set.get(correct=True)
 
-        if(selected_choice == correct_answer):
+        if selected_choice == correct_answer:
             request.session["num_correct"] += 1
         else:
             request.session["num_wrong"] += 1
 
-        if(question_id == (len(quiz.question_set.all()))):
-            return HttpResponseRedirect(reverse('quiz:results_page', args=(quiz.id, )))
+        if question_id == (len(quiz.question_set.all())):
+            return HttpResponseRedirect(reverse('quiz:results_page', args=(quiz.id,)))
         else:
-            return HttpResponseRedirect(reverse('quiz:single_question_page', args=(quiz_id, question_id+1)))
+            return HttpResponseRedirect(reverse('quiz:single_question_page', args=(quiz_id, question_id + 1)))
 
 
 def results_page(request, quiz_id):
@@ -94,18 +97,42 @@ def results_page(request, quiz_id):
 
     total_questions = num_correct + num_wrong
 
-    score = num_correct/total_questions
+    score = num_correct / total_questions
     score_over_75 = False
-    if(score >= .75):
+    if score >= .75:
         score_over_75 = True
     percentage_score = "{:.0%}".format(score)
 
-    context ={
+    context = {
         'num_correct': num_correct,
-        'num_wrong':num_wrong,
+        'num_wrong': num_wrong,
         'score_over_75': score_over_75,
         'percentage_score': percentage_score,
         'total_questions': total_questions,
         'quiz': quiz,
     }
     return render(request, 'results_page.html', context)
+
+
+def create_quiz(request):
+    if request.method == 'POST':
+
+        form = CreateNewQuizForm(request.POST)
+
+        if form.is_valid():
+            quiz_name = form.cleaned_data['quiz_name']
+            num_questions = form.cleaned_data['num_questions']
+
+            new_quiz = Quiz(quiz_title=quiz_name, num_questions=num_questions)
+            new_quiz.save()
+
+            return HttpResponseRedirect(reverse('quiz:index'))
+
+    else:
+        form = CreateNewQuizForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'create_quiz_page.html', context)
