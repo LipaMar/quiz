@@ -49,7 +49,6 @@ class CreateNewQuestionForm(forms.Form):
     choice4_correctness = forms.BooleanField(label="Choice 4 Correct?", required=False,
                                              widget=forms.CheckboxInput(attrs={'class': 'choice_correct_box'}))
 
-
     def clean(self):
 
         choice1_answer = self.cleaned_data["choice1_correctness"]
@@ -63,7 +62,7 @@ class CreateNewQuestionForm(forms.Form):
 
         trueCount = 0
         for answer in answer_list:
-            if answer == True:
+            if answer:
                 trueCount += 1
 
         if trueCount != 1:
