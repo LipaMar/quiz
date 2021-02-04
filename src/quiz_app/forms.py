@@ -49,7 +49,7 @@ class CreateNewQuestionForm(forms.Form):
     choice4_correctness = forms.BooleanField(label="Choice 4 Correct?", required=False,
                                              widget=forms.CheckboxInput(attrs={'class': 'choice_correct_box'}))
 
-    # makes sure that exactly one answer is selected to be true
+
     def clean(self):
 
         choice1_answer = self.cleaned_data["choice1_correctness"]
