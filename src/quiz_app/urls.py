@@ -14,5 +14,4 @@ urlpatterns = [
     path('create/', views.create_quiz_page, name='create_quiz_page'),
     path('create/<int:quiz_id>/<int:question_id>/', views.create_new_question_page, name='create_question_page'),
 
-
 ]
