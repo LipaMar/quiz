@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Quiz WSIZ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css">
+</head>
+<body>
+<nav  class="navbar navbar-expand-lg bg-dark text-white navbar-dark sticky-top">
+    <a class="navbar-brand">Quiz WSIZ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item" >
+                <a class="nav-link" >Zaloguj się</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" >Zarejestruj się</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link">Obserwowane</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript: document.logoutForm.submit()">Wyloguj się</a>
+                <form name="logoutForm" method="post">
+                    <input hidden type="submit" value="Sign Out"/>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% block body%}
+{% endblock %}
+<footer class="fixed-bottom bg-dark text-white">
+    <div class="text-center h5 p-2">Made by</div>
+</footer>
+</body>
+</html>
