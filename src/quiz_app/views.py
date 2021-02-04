@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Quiz, Choice
-from .forms import CreateNewQuizForm
+from .models import Quiz, Choice, Question
+from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 
 def index(request):
@@ -114,7 +114,7 @@ def results_page(request, quiz_id):
     return render(request, 'results_page.html', context)
 
 
-def create_quiz(request):
+def create_quiz_page(request):
     if request.method == 'POST':
 
         form = CreateNewQuizForm(request.POST)
@@ -126,7 +126,7 @@ def create_quiz(request):
             new_quiz = Quiz(quiz_title=quiz_name, num_questions=num_questions)
             new_quiz.save()
 
-            return HttpResponseRedirect(reverse('quiz:index'))
+            return HttpResponseRedirect(reverse('quiz:create_question_page', args=(new_quiz.id, 1,)))
 
     else:
         form = CreateNewQuizForm()
@@ -136,3 +136,67 @@ def create_quiz(request):
     }
 
     return render(request, 'create_quiz_page.html', context)
+
+
+def create_new_question_page(request, quiz_id, question_id):
+
+    # gets current quiz
+    quiz = Quiz.objects.get(pk=quiz_id)
+
+    # If this is a POST request then process the Form data
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request (binding):
+        form = CreateNewQuestionForm(request.POST)
+
+        # Check if the form is valid:
+        if form.is_valid():
+
+            # process the data in form.cleaned_data as required
+            question_text = form.cleaned_data['question_text']
+
+            choice1 = form.cleaned_data["choice1_text"]
+            choice1_correctness = form.cleaned_data["choice1_correctness"]
+
+            choice2 = form.cleaned_data["choice2_text"]
+            choice2_correctness = form.cleaned_data["choice2_correctness"]
+
+            choice3 = form.cleaned_data["choice3_text"]
+            choice3_correctness = form.cleaned_data["choice3_correctness"]
+
+            choice4 = form.cleaned_data["choice4_text"]
+            choice4_correctness = form.cleaned_data["choice4_correctness"]
+
+            # creates question in quiz
+            question = Question(quiz=quiz, question_text=question_text, question_num=question_id)
+            question.save()
+
+            # creates choices for questions
+            question.choice_set.create(choice_text=choice1, correct=choice1_correctness)
+            question.choice_set.create(choice_text=choice2, correct=choice2_correctness)
+            question.choice_set.create(choice_text=choice3, correct=choice3_correctness)
+            question.choice_set.create(choice_text=choice4, correct=choice4_correctness)
+
+            # redirect to home if done or next create question page if not
+            if question_id == quiz.num_questions:
+                return HttpResponseRedirect(reverse('quiz:index'))
+            else:
+                return HttpResponseRedirect(reverse('quiz:create_question_page', args=(quiz_id, question_id+1,)))
+
+    # If this is a GET (or any other method) create the default form.
+    else:
+        form = CreateNewQuestionForm()
+
+    if question_id == quiz.num_questions:
+        next_submit = "Submit"
+    else :
+        next_submit = "Next"
+
+    context = {
+        'form': form,
+        'question_num': question_id,
+        'next_submit': next_submit,
+
+    }
+
+    return render(request, 'create_question_page.html', context)
