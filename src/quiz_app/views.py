@@ -8,7 +8,8 @@ from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 def index(request):
     all_quizzes = Quiz.objects.all()
-    context = {'all_quizzes': all_quizzes}
+    context = {'all_quizzes': all_quizzes,
+               'title': 'Quiz WSIiZ'}
     return render(request, 'index.html', context)
 
 
@@ -133,6 +134,7 @@ def create_quiz_page(request):
 
     context = {
         'form': form,
+        'title': 'Create Quiz'
     }
 
     return render(request, 'create_quiz_page.html', context)

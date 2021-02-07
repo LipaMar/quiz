@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>Single Question Page</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block body %}
     <h2>{{  current_question.question_text }}</h2>
     {% if error_message %}<p><b>{{ error_message }}</b></p>{%  endif %}
 
@@ -18,5 +13,4 @@
         {% endfor %}
     <input type="submit" value={{ next_or_submit }}>
     </form>
-</body>
-</html>
+{% endblock %}

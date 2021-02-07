@@ -11,4 +11,5 @@
 {% else %}
     <p>There are no quizzes in the database.</p>
 {%  endif %}
+    <a href="{% url 'quiz:create_quiz_page' %}">Create a new quiz</a>
 {% endblock %}
