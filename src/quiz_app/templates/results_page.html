@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Results Page</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block body %}
     <p>{{ num_correct }}/{{ total_questions }}</p>
 
     {% if score_over_75 %}
@@ -15,5 +11,4 @@
 
     <a class="home_button" href="{% url 'quiz:index' %}">Home</a>
     <a class="home_button" href="{% url 'quiz:single_quiz_page' quiz.id %}">Try Again</a>
-</body>
-</html>
+{% endblock %}
