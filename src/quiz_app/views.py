@@ -7,6 +7,7 @@ from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 
 def index(request):
+
     all_quizzes = Quiz.objects.all()
     context = {'all_quizzes': all_quizzes,
                'title': 'Quiz WSIiZ'}
