@@ -7,6 +7,7 @@ from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 
 def index(request):
+
     all_quizzes = Quiz.objects.all()
     context = {'all_quizzes': all_quizzes,
                'title': 'Quiz WSIiZ'}
@@ -36,6 +37,8 @@ def single_quiz_page(request, quiz_id):
 def single_question_page(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     current_question = quiz.question_set.get(question_num=question_id)
+    total = len(quiz.question_set.all())
+    percent = ((current_question.question_num - 1)/total)*100
 
     next_or_submit = "Next"
     last_question_check = False
@@ -53,7 +56,9 @@ def single_question_page(request, quiz_id, question_id):
         'quiz': quiz,
         'next_question_id': next_question_id,
         'last_question_check': last_question_check,
-        'next_or_submit': next_or_submit
+        'next_or_submit': next_or_submit,
+        'total': total,
+        'percent': percent
     }
 
     return render(request, 'single_question_page.html', context)
@@ -62,6 +67,8 @@ def single_question_page(request, quiz_id, question_id):
 def vote(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     current_question = quiz.question_set.get(question_num=question_id)
+    total = len(quiz.question_set.all())
+    percent = ((current_question.question_num - 1)/total)*100
 
     next_or_submit = "Next"
     if question_id == (len(quiz.question_set.all())):
@@ -75,6 +82,8 @@ def vote(request, quiz_id, question_id):
             'current_question': current_question,
             'error_message': "Choose an answer!",
             'next_or_submit': next_or_submit,
+            'total': total,
+            'percent': percent
         })
     else:
         correct_answer = current_question.choice_set.get(correct=True)

@@ -1,15 +1,32 @@
-
 {% extends "base.html" %}
 
 {% block body %}
-{% if all_quizzes %}
-<ul>
-    {% for object in all_quizzes %}
-        <li><a href="{% url 'quiz:single_quiz_page' object.id %}"> {{ object.quiz_title }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>There are no quizzes in the database.</p>
-{%  endif %}
-    <a href="{% url 'quiz:create_quiz_page' %}">Create a new quiz</a>
+    <div class="mt-2 mb-3">
+        <div class="card-body">
+            <a class="btn btn-success btn-lg d-flex justify-content-center mx-5" href="{% url 'quiz:create_quiz_page' %}">Create a new quiz</a>
+        </div>
+    </div>
+    {% if all_quizzes %}
+        <div class="card-columns text-white">
+
+
+            {% for object in all_quizzes %}
+                {% load colors %}
+                <div class="card my-3 bg-{% color forloop.counter0 %}">
+                <img class="card-img-top"
+                     src="static/quiz_app/quiz.png"
+                     alt="Card image cap">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">{{ object.quiz_title }}</h3>
+                        <p>Number of questions: {{ object.num_questions }}</p>
+                        <a class="btn btn-light btn-lg d-flex justify-content-center mx-5"
+                           href="{% url 'quiz:single_quiz_page' object.id %}">Start</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <p>There are no quizzes in the database.</p>
+    {% endif %}
 {% endblock %}
