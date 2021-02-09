@@ -8,9 +8,6 @@
 
         <form action="" method="post">
             {% csrf_token %}
-            <div class="error_text d-flex justify-content-center">
-                {{ form.non_field_errors }}
-            </div>
 
             <div class>
                 {{ form.question_text.errors }}
@@ -85,6 +82,11 @@
                 </div>
 
             </div>
+
+            <div class="text-danger font-weight-bold text-center pt-2 d-flex justify-content-center">
+                {{ form.non_field_errors }}
+            </div>
+
 
         <input class="submit_button" type="submit" value={{ next_submit }}>
         </form>
