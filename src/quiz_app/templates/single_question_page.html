@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div>
+        <div class="card p-2">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+                     style="width:{{ percent }}%" role="progressbar"
+                     aria-valuenow="{{ current_question.question_num }}" aria-valuemin="0"
+                     aria-valuemax="{{ total }}"></div>
+            </div>
+            <h2>{{ current_question.question_text }}</h2>
+
+            <div class="d-flex justify-content-center">
+                <form action="{% url 'quiz:vote' quiz.id current_question.question_num %}" method="post">
+                    {% csrf_token %}
+                    {% for x in current_question.choice_set.all %}
+                        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ x.id }}">
+                        <label for="choice{{ forloop.counter }}">{{ x.choice_text }}</label>
+                        <br>
+                    {% endfor %}
+                    {% if error_message %}<p class="text-danger text-center"><b>{{ error_message }}</b></p>{% endif %}
+                    <input class="btn btn-dark" type="submit" value={{ next_or_submit }}>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

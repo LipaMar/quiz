@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <div class="card border-dark my-3">
+        <div class="card-body text-center">
+
+            <h1 class="pb-1">Create Quiz</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div>
+                    {{ form.non_field_errors }}
+                </div>
+
+                <div>
+                    {{ form.quiz_name.errors }}
+                    <label class="d-flex justify-content-center" for="{{ form.quiz_name.id_for_label }}">Quiz Name: </label>
+                    {{ form.quiz_name }}
+                </div>
+
+                <div>
+                    <label class="d-flex justify-content-center" for="{{ form.num_questions.id_for_label }}">Number of
+                        Questions: </label>
+                    {{ form.num_questions }}
+                    <div class="text-danger font-weight-bold text-center pt-2 d-flex justify-content-center">
+                        {{ form.num_questions.errors }}
+                    </div>
+                </div>
+
+
+                <input class="btn btn-outline-success" type="submit" value="Create">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

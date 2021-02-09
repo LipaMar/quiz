@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="card border-dark my-3">
+        <div class="card-body text-center">
+            <h3>Your results of {{ quiz.quiz_title }}</h3>
+            <p>Number of correct answers: {{ num_correct }}/{{ total_questions }}</p>
+            <p> Percentage Result:
+                {% if score_over_75 %}
+                    <p class="text-success font-weight-bold">{{ percentage_score }}</p>
+                    <p class="font-italic">Woohoo! Congratulations, good result.</p>
+                {% else %}
+                    <p class="text-danger font-weight-bold">{{ percentage_score }}</p>
+                    <p class="font-italic">Unfortunately, you failed to pass the Quiz, Please try again.</p>
+                {% endif %}
+            </p>
+
+            <div class="btn-group" role="group">
+                <a class="btn btn-outline-primary" href="{% url 'quiz:index' %}">Home</a>
+                <a class="btn btn-outline-success" href="{% url 'quiz:single_quiz_page' quiz.id %}">Try Again</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

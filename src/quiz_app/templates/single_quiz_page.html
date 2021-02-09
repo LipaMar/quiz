@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="card border-dark my-3">
+        <div class="card-body text-center">
+            <h1>{{ quiz.quiz_title }}</h1>
+            <p>Number of questions: {{ quiz.num_questions }}</p>
+
+            <div class="btn-group" role="group">
+                <a class="btn btn-outline-primary" href="{% url 'quiz:single_question_page' quiz.id 1 %}">Start Quiz!</a>
+                <a class="btn btn-outline-dark" href="{% url 'quiz:index' %}">Back</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

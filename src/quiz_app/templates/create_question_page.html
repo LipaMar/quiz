@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="card border-dark my-3">
+        <div class="card-body text-center">
+
+        <h1 class="pb-1">Create Question {{ question_num }}</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class>
+                {{ form.question_text.errors }}
+                <label  for="{{ form.question_text.id_for_label }}">Question Text:  </label>
+                {{ form.question_text }}
+            </div>
+
+            <div class="d-flex justify-content-center">
+
+                <div>
+                    {{ form.choice1_text.errors }}
+                    <label  for="{{ form.choice1_text.id_for_label }}">Choice 1:  </label>
+                    {{ form.choice1_text }}
+                </div>
+
+                <div>
+                    {{ form.choice1_correctness.errors }}
+                    <label  for="{{ form.choice1_text.id_for_label }}"></label>
+                    {{ form.choice1_correctness }}
+
+                </div>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center">
+
+                <div>
+                    {{ form.choice2_text.errors }}
+                    <label  for="{{ form.choice2_text.id_for_label }}">Choice 2:  </label>
+                    {{ form.choice2_text }}
+                </div>
+
+                <div>
+                    {{ form.choice2_correctness.errors }}
+                    <label  for="{{ form.choice2_text.id_for_label }}"></label>
+                    {{ form.choice2_correctness }}
+                </div>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center">
+
+                <div>
+                    {{ form.choice3_text.errors }}
+                    <label  for="{{ form.choice3_text.id_for_label }}">Choice 3:  </label>
+                    {{ form.choice3_text }}
+                </div>
+
+                <div>
+                    {{ form.choice3_correctness.errors }}
+                    <label  for="{{ form.choice3_correctness.id_for_label }}"></label>
+                    {{ form.choice3_correctness }}
+                </div>
+
+            </div>
+
+
+            <div class="d-flex justify-content-center">
+
+                <div>
+                    {{ form.choice4_text.errors }}
+                    <label  for="{{ form.choice4_text.id_for_label }}">Choice 4:  </label>
+                    {{ form.choice4_text }}
+                </div>
+
+                <div>
+                    {{ form.choice4_correctness.errors }}
+                    <label  for="{{ form.choice4_correctness.id_for_label }}"></label>
+                    {{ form.choice4_correctness }}
+                </div>
+
+            </div>
+
+            <div class="text-danger font-weight-bold text-center pt-2 d-flex justify-content-center">
+                {{ form.non_field_errors }}
+            </div>
+
+
+        <input class="submit_button" type="submit" value={{ next_submit }}>
+        </form>
+</div>
+    </div>
+{% endblock %}
