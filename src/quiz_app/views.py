@@ -7,8 +7,11 @@ from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 
 def index(request):
-
     all_quizzes = Quiz.objects.all()
+    for quiz in all_quizzes:
+        if len(quiz.question_set.all()) == 0:
+            quiz.delete()
+            all_quizzes = Quiz.objects.all()
     context = {'all_quizzes': all_quizzes,
                'title': 'Quiz WSIiZ'}
     return render(request, 'index.html', context)
