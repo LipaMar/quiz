@@ -1,7 +1,7 @@
 # Quiz WSIiZ
 
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README.md)
+![GitHub repo size](https://img.shields.io/github/repo-size/LipaMar/quiz)
+
 
 ![quiz](https://user-images.githubusercontent.com/50294425/107413440-0a847100-6b11-11eb-9f35-245b463719f6.png)
 
