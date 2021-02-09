@@ -20,7 +20,7 @@ class CreateNewQuizForm(forms.Form):
         data = self.cleaned_data['num_questions']
 
         if (isinstance(data, int) is False) or (data < 1):
-            raise ValidationError(_('Invalid number of questions! Must be positive integer.)'))
+            raise ValidationError(_('Invalid number of questions!'))
 
         return data
 
