@@ -7,6 +7,11 @@ from .forms import CreateNewQuizForm, CreateNewQuestionForm
 
 
 def index(request):
+    """
+    Home page with list of quizzes
+    :param request: request object
+    :return: render index page with context
+    """
     all_quizzes = Quiz.objects.all()
     for quiz in all_quizzes:
         if len(quiz.question_set.all()) == 0:
@@ -18,6 +23,14 @@ def index(request):
 
 
 def single_quiz_page(request, quiz_id):
+    """
+    Start page of a particular quiz
+    :param request: request object
+    :param quiz_id: id of a particular quiz
+    :return:
+    Number of questions > 0: render single quiz page with context
+    Else: render index page with context
+    """
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     num_of_questions = len(quiz.question_set.all())
 
@@ -38,6 +51,13 @@ def single_quiz_page(request, quiz_id):
 
 
 def single_question_page(request, quiz_id, question_id):
+    """
+    Question page with answers for a selected quiz
+    :param request: request object
+    :param quiz_id: id of a particular quiz
+    :param question_id: id of a particular question
+    :return: render single question page with context
+    """
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     current_question = quiz.question_set.get(question_num=question_id)
     total = len(quiz.question_set.all())
@@ -68,6 +88,16 @@ def single_question_page(request, quiz_id, question_id):
 
 
 def vote(request, quiz_id, question_id):
+    """
+    View that receives info from user's answer to question and determines correctness
+    :param request: request object
+    :param quiz_id: id of a particular quiz
+    :param question_id: id of a particular question
+    :return:
+    No answer chosen: render the same page with error message
+    End of a quiz: redirect to results page
+    Else: redirect to next question page
+    """
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     current_question = quiz.question_set.get(question_num=question_id)
     total = len(quiz.question_set.all())
@@ -103,6 +133,12 @@ def vote(request, quiz_id, question_id):
 
 
 def results_page(request, quiz_id):
+    """
+    Quiz results page
+    :param request: request object
+    :param quiz_id: id of a particular quiz
+    :return: render results page with context
+    """
     quiz = get_object_or_404(Quiz, pk=quiz_id)
 
     num_correct = request.session["num_correct"]
@@ -128,6 +164,13 @@ def results_page(request, quiz_id):
 
 
 def create_quiz_page(request):
+    """
+    Creation page for a quiz
+    :param request: request object
+    :return:
+    Creation page form is valid: redirect to create question page
+    Else: render creation page with context
+    """
     if request.method == 'POST':
 
         form = CreateNewQuizForm(request.POST)
@@ -153,6 +196,19 @@ def create_quiz_page(request):
 
 
 def create_new_question_page(request, quiz_id, question_id):
+    """
+    Quiz question creation page
+    :param request: request object
+    :param quiz_id: id of a particular quiz
+    :param question_id: id of a particular question
+    :return:
+    Create new question form is valid:
+        Last question: redirect to index page
+        Else: redirect to next question creation page
+    Else: render question creation page with context
+
+
+    """
     quiz = Quiz.objects.get(pk=quiz_id)
 
     if request.method == 'POST':
