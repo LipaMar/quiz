@@ -5,10 +5,17 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class CreateNewQuizForm(forms.Form):
+    """
+    Form to create a new quiz
+    """
     quiz_name = forms.CharField(max_length=30, label="Quiz Name")
     num_questions = forms.IntegerField(label="Number of Questions")
 
     def clean_name(self):
+        """
+        Checks if quiz name is unique
+        :return: error free data
+        """
         data = self.cleaned_data['quiz_name']
 
         if data == "Default_Name":
@@ -17,6 +24,10 @@ class CreateNewQuizForm(forms.Form):
         return data
 
     def clean_num_questions(self):
+        """
+        Checks if number of questions is a positive integer
+        :return: error free data
+        """
         data = self.cleaned_data['num_questions']
 
         if (isinstance(data, int) is False) or (data < 1):
@@ -26,6 +37,9 @@ class CreateNewQuizForm(forms.Form):
 
 
 class CreateNewQuestionForm(forms.Form):
+    """
+    Form to create questions with choices for each quiz
+    """
     question_text = forms.CharField(max_length=300, label="Question Text",
                                     widget=forms.TextInput(attrs={'class': 'question_text_box'}))
 
@@ -50,7 +64,10 @@ class CreateNewQuestionForm(forms.Form):
                                              widget=forms.CheckboxInput(attrs={'class': 'choice_correct_box'}))
 
     def clean(self):
-
+        """
+        Makes sure that exactly one answer is selected to be true
+        :return: error free data
+        """
         choice1_answer = self.cleaned_data["choice1_correctness"]
         choice2_answer = self.cleaned_data["choice2_correctness"]
         choice3_answer = self.cleaned_data["choice3_correctness"]
